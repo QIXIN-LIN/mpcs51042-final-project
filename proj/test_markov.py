@@ -135,24 +135,24 @@ def test_probabilities(fileA, fileB, fileC, k, expected, prob1, prob2, use_hasht
 
     if got_speaker != expected:
         s = (
-            "actual speaker ({got_speaker}) and expected speaker "
-            "({expected_speaker}) values do not match, use_hashtable=({use_hashtable})"
+            f"actual speaker ({got_speaker}) and expected speaker "
+            f"({expected}) values do not match, use_hashtable=({use_hashtable})"
         )
-        pytest.fail(s.format())
+        pytest.fail(s)
 
     # Check to to see if the probabilities returned by identify_speaker
     # matches the expected probabilities
 
     if not math.isclose(prob_a, prob1):
         s = (
-            "actual speaker probability A ({}) and expected probability "
-            "({}) values do not match, use_hashtable=({use_hashtable})"
+            f"actual speaker probability A ({prob_a}) and expected probability "
+            f"({prob1}) values do not match, use_hashtable=({use_hashtable})"
         )
-        pytest.fail(s.format(prob_a, prob1))
+        pytest.fail(s)
 
     if not math.isclose(prob_b, prob2):
         s = (
-            "actual speaker probability B ({}) and expected probability "
-            " ({}) values do not match, use_hashtable=({use_hashtable})"
+            f"actual speaker probability B ({prob_b}) and expected probability "
+            f" ({prob2}) values do not match, use_hashtable=({use_hashtable})"
         )
-        pytest.fail(s.format(prob_b, prob2))
+        pytest.fail(s)
