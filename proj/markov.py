@@ -19,8 +19,8 @@ class Markov:
         self.uni_chars = set(text)
 
     def get_strs(self, text, pointer):
-        k_str = text[pointer:pointer+self.k]
-        k_str_plus1 = text[pointer:pointer+self.k+1]
+        k_str = text[pointer:pointer + self.k]
+        k_str_plus1 = text[pointer:pointer + self.k + 1]
 
         if len(k_str) < self.k:
             k_str += text[:self.k-len(k_str)]
@@ -32,15 +32,8 @@ class Markov:
     def build_model(self, text):
         for i in range(len(text)):
             model_str, model_str_plus1 = self.get_strs(text, i)
-
             for string in (model_str, model_str_plus1):
-                if self.use_hashtable: 
-                    if string in self.model:
-                        self.model[string] += 1
-                    else:
-                        self.model[string] = 1
-                else:
-                    self.model[string] = self.model.get(string, 0) + 1
+                self.model[string] = self.model.get(string, 0) + 1
 
 
     def log_probability(self, s):

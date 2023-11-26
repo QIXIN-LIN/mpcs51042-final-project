@@ -1,6 +1,7 @@
 import sys
 from markov import identify_speaker
 
+
 if __name__ == "__main__":
     if len(sys.argv) != 6:
         print(
@@ -15,9 +16,21 @@ if __name__ == "__main__":
         print("Final parameter must either be 'hashtable' or 'dict'")
         sys.exit(1)
 
-    # TODO: add code here to open files & read text
+    with open(filenameA, 'r') as file:
+        speech1 = file.read()
+    with open(filenameB, 'r') as file:
+        speech2 = file.read()
+    with open(filenameC, 'r') as file:
+        speech3 = file.read()
 
-    # TODO: add code to call identify_speaker & print results
+    use_hashtable = (hashtable_or_dict == "hashtable")
+    prob_speaker_a, prob_speaker_b, most_likely_speaker = identify_speaker(speech1, speech2, speech3, k, use_hashtable)
+
+    # Print results
+    print(f"Speaker A: {prob_speaker_a}")
+    print(f"Speaker B: {prob_speaker_b}")
+    print(f"\nConclusion: Speaker {most_likely_speaker} is most likely")
+
 
     # Output should resemble (values will differ based on inputs):
 
