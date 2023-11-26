@@ -3,6 +3,9 @@ from collections.abc import MutableMapping
 
 class Node:
     def __init__(self, key, value):
+        '''
+        Initiate a Node instance with key and value
+        '''
         self.key = key
         self.value = value
         self.next = None
@@ -10,10 +13,19 @@ class Node:
 
 class LinkedList:
     def __init__(self):
+        '''
+        Initiate a LinkedList instance
+        '''
         self.head = None
         self.tail = None
 
     def add(self, key, value):
+        '''
+        Add one node at the end of this list
+        Inputs:
+            key: the key of node
+            value: the value of node
+        '''
         if self.head is None:
             self.head = self.tail = Node(key, value)
 
@@ -28,6 +40,11 @@ class LinkedList:
         self.tail = self.tail.next
 
     def remove(self, key):
+        '''
+        Remove one node with a specific key in this list
+        Inputs:
+            key: the key of the specific node
+        '''
         current_node = self.head
         previous_node = None
         while current_node:
@@ -42,6 +59,13 @@ class LinkedList:
         return False
 
     def find(self, key):
+        '''
+        Find one node in the list with a specific key
+        Inputs:
+            key: the key of the specific node
+        Returns:
+            the value of the specific node, None if cannot find
+        '''
         current_node = self.head
         while current_node:
             if current_node.key == key:
@@ -54,6 +78,9 @@ class Hashtable(MutableMapping):
     P_CONSTANT = 37
 
     def __init__(self, capacity, default_value, load_factor, growth_factor):
+        '''
+        Initiate a Hashtable instance
+        '''
         self.capacity = capacity
         self.default_value = default_value
         self.load_factor = load_factor
@@ -86,6 +113,9 @@ class Hashtable(MutableMapping):
             self._resize()
 
     def _resize(self):
+        '''
+        Resize the Hashtable and place all nodes based on new capacity
+        '''
         new_capacity = self.growth_factor * self.capacity
         new_items = [LinkedList() for i in range(new_capacity)]
         for linked_list in self._items:

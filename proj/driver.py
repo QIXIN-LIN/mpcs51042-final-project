@@ -16,6 +16,7 @@ if __name__ == "__main__":
         print("Final parameter must either be 'hashtable' or 'dict'")
         sys.exit(1)
 
+    # open and read the files
     with open(filenameA, 'r') as file:
         speech1 = file.read()
     with open(filenameB, 'r') as file:
@@ -23,10 +24,11 @@ if __name__ == "__main__":
     with open(filenameC, 'r') as file:
         speech3 = file.read()
 
+    # call identify_speaker
     use_hashtable = (hashtable_or_dict == "hashtable")
     prob_speaker_a, prob_speaker_b, most_likely_speaker = identify_speaker(speech1, speech2, speech3, k, use_hashtable)
 
-    # Print results
+    # print results
     print(f"Speaker A: {prob_speaker_a}")
     print(f"Speaker B: {prob_speaker_b}")
     print(f"\nConclusion: Speaker {most_likely_speaker} is most likely")

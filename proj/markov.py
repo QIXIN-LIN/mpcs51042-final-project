@@ -19,9 +19,13 @@ class Markov:
         self.uni_chars = set(text)
 
     def get_strs(self, text, pointer):
+        '''
+        Get the two required strings in the text
+        '''
         k_str = text[pointer:pointer + self.k]
         k_str_plus1 = text[pointer:pointer + self.k + 1]
 
+        # deal with the situation that the length of string is not enough 
         if len(k_str) < self.k:
             k_str += text[:self.k-len(k_str)]
         if len(k_str_plus1) < self.k+1:
@@ -30,6 +34,9 @@ class Markov:
         return k_str, k_str_plus1
 
     def build_model(self, text):
+        '''
+        Build the markov model with text based on README.md
+        '''
         for i in range(len(text)):
             model_str, model_str_plus1 = self.get_strs(text, i)
             for string in (model_str, model_str_plus1):
@@ -45,10 +52,10 @@ class Markov:
         total_log_prob = 0
         for i in range(len(s)):
             s_str, s_str_plus1 = self.get_strs(s, i)
-            M = self.model.get(s_str_plus1, 0)
-            N = self.model.get(s_str, 0)
-            S = len(self.uni_chars)
-            total_log_prob += math.log((M + 1) / (N + S))
+            num_observed_string_kplus1 = self.model.get(s_str_plus1, 0)
+            num_observed_string_k = self.model.get(s_str, 0)
+            num_uni_chars = len(self.uni_chars)
+            total_log_prob += math.log((num_observed_string_kplus1 + 1) / (num_observed_string_k + num_uni_chars))
         return total_log_prob
 
 

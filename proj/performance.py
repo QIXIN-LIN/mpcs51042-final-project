@@ -5,8 +5,11 @@ import pandas as pd
 import seaborn as sns
 import matplotlib.pyplot as plt
 
+
 def run_performance_test(speech1, speech2, speech3, max_k, runs, use_hashtable):
-    # Record timings in a list of dictionaries
+    '''
+    record timings in a list of dictionaries
+    '''
     records = []
     for k in range(1, max_k + 1):
         for run in range(1, runs + 1):
@@ -21,6 +24,7 @@ def run_performance_test(speech1, speech2, speech3, max_k, runs, use_hashtable):
             })
     return records
 
+
 if __name__ == "__main__":
     if len(sys.argv) != 6:
         print(
@@ -33,8 +37,7 @@ if __name__ == "__main__":
     max_k = int(max_k)
     runs = int(runs)
 
-    # TODO: add code here to open files & read text
-    # Read text from files
+    # open files & read text
     with open(filenameA, 'r') as file:
         speech1 = file.read()
     with open(filenameB, 'r') as file:
@@ -42,22 +45,19 @@ if __name__ == "__main__":
     with open(filenameC, 'r') as file:
         speech3 = file.read()
 
-    # Run performance tests
+    # run performance tests as outlined in README.md
     records = []
-    records += run_performance_test(speech1, speech2, speech3, max_k, num_runs, True)
-    records += run_performance_test(speech1, speech2, speech3, max_k, num_runs, False)
+    records += run_performance_test(speech1, speech2, speech3, max_k, runs, True)
+    records += run_performance_test(speech1, speech2, speech3, max_k, runs, False)
 
-    # Create a DataFrame from the records
+    # create a DataFrame from the records
     df = pd.DataFrame(records)
+    df_average = df.groupby(["Implementation", "K"])["Time"].mean()
 
-    # Plotting with seaborn
-    sns.pointplot(data=df, x='K', y='Time', hue='Implementation', linestyle='-', marker='o')
+    # write execution_graph.png
+    sns.pointplot(data=df, x="K", y="Time", hue="Implementation", linestyle="-", marker="o")
     plt.xlabel("K")
     plt.ylabel(f"Average Time (Runs={runs})")
     plt.title("HashTable vs Python dict")
     plt.savefig('execution_graph.png')
-    plt.show()  # If you want to also display the plot
-
-    # TODO: run performance tests as outlined in README.md
-
-    # TODO: write execution_graph.png
+    plt.show()
